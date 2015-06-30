@@ -13,6 +13,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        if (APP_ID.startsWith("Replace") || API_KEY.startsWith("Replace")) {
+            throw new IllegalArgumentException("Please replace with your app id and api key first before" +
+                    "using LAS SDK.");
+        }
+
 		/*
          * Fill in this section with your LAS credentials
 		 */
