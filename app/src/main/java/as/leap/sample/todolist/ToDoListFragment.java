@@ -77,6 +77,9 @@ public class ToDoListFragment extends ListFragment {
                             setListAdapter(adapter);
 
                         } else {
+                            if (e.getCode() == LASException.OBJECT_NOT_FOUND) {
+                                setListAdapter(null);
+                            }
                             setEmptyText(getString(R.string.empty));
                             e.printStackTrace();
                         }
