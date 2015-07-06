@@ -2,7 +2,7 @@
 
 ## 简介
 
-Todo 是 LAS SDK 的一个 Sample，该项目依赖于 LAS 的基础模块。通过该应用你可以学习和了解 基于 LAS SDK 的基本 CRUD 操作。
+Todo 是 LAS SDK 的一个 Sample，该项目依赖于 LAS 的基础模块。通过该应用你可以学习和了解基于 LAS SDK 的基本 CRUD 操作。
 
 ## 效果
 
