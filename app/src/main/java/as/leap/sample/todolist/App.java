@@ -21,7 +21,7 @@ public class App extends Application {
 		/*
          * Fill in this section with your LAS credentials
 		 */
-        LASConfig.setLogLevel(LASConfig.LOG_LEVEL_VERBOSE);
+        LASConfig.setLogLevel(LASConfig.LOG_LEVEL_ERROR);
         LASConfig.initialize(getApplicationContext(), APP_ID, API_KEY);
     }
 
