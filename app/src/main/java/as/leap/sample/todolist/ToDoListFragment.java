@@ -15,18 +15,18 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import as.leap.LASDataManager;
-import as.leap.LASObject;
-import as.leap.LASQuery;
-import as.leap.LASQueryManager;
-import as.leap.callback.DeleteCallback;
-import as.leap.callback.FindCallback;
-import as.leap.callback.SaveCallback;
-import as.leap.exception.LASException;
+import as.leap.DeleteCallback;
+import as.leap.FindCallback;
+import as.leap.LCDataManager;
+import as.leap.LCObject;
+import as.leap.LCQuery;
+import as.leap.LCQueryManager;
+import as.leap.SaveCallback;
+import as.leap.exception.LCException;
 
 public class ToDoListFragment extends ListFragment {
 
-    private List<LASObject> todos;
+    private List<LCObject> todos;
     private ListViewClickCallback listViewClickCallback;
 
     public static final int INSERT_ID = Menu.FIRST;
@@ -53,13 +53,13 @@ public class ToDoListFragment extends ListFragment {
     }
 
     public void findResult() {
-        LASQuery<LASObject> query = new LASQuery<LASObject>("Todo");
+        LCQuery<LCObject> query = new LCQuery<LCObject>("Todo");
         query.orderByDescending("createdAt");
-        LASQueryManager.findAllInBackground(query,
-                new FindCallback<LASObject>() {
+        LCQueryManager.findAllInBackground(query,
+                new FindCallback<LCObject>() {
 
                     @Override
-                    public void done(List<LASObject> results, LASException e) {
+                    public void done(List<LCObject> results, LCException e) {
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
@@ -70,14 +70,14 @@ public class ToDoListFragment extends ListFragment {
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                                     getActivity(), R.layout.todo_row);
                             if (todos != null) {
-                                for (LASObject todo : todos) {
+                                for (LCObject todo : todos) {
                                     adapter.add(todo.getString(CreateTodoActivity.EXTRA_NAME));
                                 }
                             }
                             setListAdapter(adapter);
 
                         } else {
-                            if (e.getCode() == LASException.OBJECT_NOT_FOUND) {
+                            if (e.getCode() == LCException.OBJECT_NOT_FOUND) {
                                 setListAdapter(null);
                             }
                             setEmptyText(getString(R.string.empty));
@@ -88,13 +88,13 @@ public class ToDoListFragment extends ListFragment {
     }
 
     public void update(String name, int position) {
-        LASObject todo = todos.get(position);
+        LCObject todo = todos.get(position);
         todo.put("name", name);
         setListShown(false);
-        LASDataManager.saveInBackground(todo, new SaveCallback() {
+        LCDataManager.saveInBackground(todo, new SaveCallback() {
 
             @Override
-            public void done(LASException exception) {
+            public void done(LCException exception) {
                 if (exception != null) {
                     setListShown(true);
                 } else {
@@ -125,13 +125,13 @@ public class ToDoListFragment extends ListFragment {
                         .getMenuInfo();
 
                 // Delete the remote object
-                final LASObject todo = todos.get(info.position);
+                final LCObject todo = todos.get(info.position);
 
                 setListShown(false);
-                LASDataManager.deleteInBackground(todo, new DeleteCallback() {
+                LCDataManager.deleteInBackground(todo, new DeleteCallback() {
 
                     @Override
-                    public void done(LASException exception) {
+                    public void done(LCException exception) {
                         if (exception != null) {
                             setListShown(true);
                         } else {

@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import as.leap.LASDataManager;
-import as.leap.LASObject;
-import as.leap.callback.SaveCallback;
-import as.leap.exception.LASException;
+import as.leap.LCDataManager;
+import as.leap.LCObject;
+import as.leap.SaveCallback;
+import as.leap.exception.LCException;
 
 public class ToDoListActivity extends SingleFragmentActivity implements ToDoListFragment.ListViewClickCallback {
 
@@ -19,7 +19,7 @@ public class ToDoListActivity extends SingleFragmentActivity implements ToDoList
     public static final int INSERT_ID = Menu.FIRST;
     private static final int DELETE_ID = Menu.FIRST + 1;
 
-    private LASObject todo;
+    private LCObject todo;
     private ToDoListFragment fragment;
 
     @Override
@@ -46,13 +46,13 @@ public class ToDoListActivity extends SingleFragmentActivity implements ToDoList
             case ACTIVITY_CREATE:
 
                 String name = extras.getString(CreateTodoActivity.EXTRA_NAME);
-                todo = new LASObject("Todo");
+                todo = new LCObject("Todo");
                 todo.put(CreateTodoActivity.EXTRA_NAME, name);
                 fragment.setListShown(false);
-                LASDataManager.saveInBackground(todo, new SaveCallback() {
+                LCDataManager.saveInBackground(todo, new SaveCallback() {
 
                     @Override
-                    public void done(LASException exception) {
+                    public void done(LCException exception) {
                         if (exception != null) {
                             fragment.setListShown(true);
                         } else {
