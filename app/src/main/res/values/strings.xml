@@ -23,4 +23,6 @@
     <string name="create_todo_item">Create Todo Item</string>
     <string name="delete_todolist">Delete a todo list?</string>
     <string name="delete_todoitem">Delete a todo item?</string>
+    <string name="action_add">Add</string>
+    <string name="action_refresh">Refresh</string>
 </resources>

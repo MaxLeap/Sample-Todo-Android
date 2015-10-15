@@ -17,15 +17,11 @@ public class TodoItemsActivity extends BaseActivity {
 
     public static final String EXTRA_TODOLIST_ID = "todolistId";
 
-
-    public static final int INSERT_ID = Menu.FIRST;
-    public static final int DELETE_ID = Menu.FIRST + 1;
-
-    private String todolistId;
-    private ListView listView;
-    private ProgressBar progressBar;
-    private List<TodoItem> todoItems;
-    private TodoList todoList;
+    private String mTodolistId;
+    private ListView mListView;
+    private ProgressBar mProgressBar;
+    private List<TodoItem> mTodoItems;
+    private TodoList mTodoList;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -35,22 +31,22 @@ public class TodoItemsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getString(R.string.title_item));
 
-        todolistId = getIntent().getStringExtra(EXTRA_TODOLIST_ID);
-        listView = (ListView) findViewById(R.id.list);
-        progressBar = (ProgressBar) findViewById(R.id.progress);
+        mTodolistId = getIntent().getStringExtra(EXTRA_TODOLIST_ID);
+        mListView = (ListView) findViewById(R.id.list);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress);
 
-        todoList = new TodoList();
-        todoList.setObjectId(todolistId);
+        mTodoList = new TodoList();
+        mTodoList.setObjectId(mTodolistId);
 
         setListShown(false);
         findResult();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {
                 final CheckedTextView textView = (CheckedTextView) view.findViewById(R.id.item);
-                final TodoItem todoItem = todoItems.get(position);
+                final TodoItem todoItem = mTodoItems.get(position);
                 final boolean previous = todoItem.isDone();
                 todoItem.setDone(!previous);
                 textView.setChecked(todoItem.isDone());
@@ -64,22 +60,22 @@ public class TodoItemsActivity extends BaseActivity {
                             textView.setChecked(previous);
                             todoItem.setDone(previous);
 
-                            Utils.toast(context, e.getMessage());
+                            Utils.toast(mContext, e.getMessage());
                         }
                     }
                 });
             }
         });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> parent, final View view,
                                            final int position, final long id) {
-                new AlertDialog.Builder(context)
+                new AlertDialog.Builder(mContext)
                         .setMessage(R.string.delete_todoitem)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialog, final int which) {
-                                TodoItem todoItem = todoItems.get(position);
+                                TodoItem todoItem = mTodoItems.get(position);
                                 setListShown(false);
                                 MLDataManager.deleteInBackground(todoItem, new DeleteCallback() {
                                     @Override
@@ -93,7 +89,7 @@ public class TodoItemsActivity extends BaseActivity {
 
                                             if (e.getCode() != MLException.OBJECT_NOT_FOUND) {
                                                 MLLog.e(TAG, e);
-                                                Utils.toast(context, e.getMessage());
+                                                Utils.toast(mContext, e.getMessage());
                                             }
                                             return;
                                         }
@@ -112,22 +108,21 @@ public class TodoItemsActivity extends BaseActivity {
 
     private void setListShown(boolean shown) {
         if (shown) {
-            listView.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         } else {
-            listView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
     }
 
     private void setListAdapter(ListAdapter adapter) {
-        listView.setAdapter(adapter);
+        mListView.setAdapter(adapter);
         setListShown(true);
     }
 
     private void findResult() {
-        // TODO: 10/13/15
-        MLQuery<TodoItem> query = todoList.getTodoItems().getQuery();
+        MLQuery<TodoItem> query = mTodoList.getTodoItems().getQuery();
         query.orderByDescending(MLObject.KEY_UPDATED_AT);
         MLQueryManager.findAllInBackground(query, new FindCallback<TodoItem>() {
             @Override
@@ -139,16 +134,16 @@ public class TodoItemsActivity extends BaseActivity {
 
                 if (null != e) {
                     if (e.getCode() == MLException.OBJECT_NOT_FOUND) {
-                        Utils.toast(context, getString(R.string.empty_item));
+                        Utils.toast(mContext, getString(R.string.empty_item));
                         setListAdapter(null);
                     } else {
                         MLLog.e(TAG, e);
-                        Utils.toast(context, e.getMessage());
+                        Utils.toast(mContext, e.getMessage());
                     }
                     return;
                 }
-                todoItems = list;
-                Apt apt = new Apt(context);
+                mTodoItems = list;
+                Apt apt = new Apt(mContext);
                 for (TodoItem todoItem : list) {
                     apt.add(todoItem);
                 }
@@ -159,21 +154,21 @@ public class TodoItemsActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        menu.add(0, INSERT_ID, 0, R.string.menu_insert);
+        getMenuInflater().inflate(R.menu.menu_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
-            case INSERT_ID:
-                final EditText editText = new EditText(context);
-                LinearLayout linearLayout = new LinearLayout(context);
+            case R.id.action_add:
+                final EditText editText = new EditText(mContext);
+                LinearLayout linearLayout = new LinearLayout(mContext);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 params.leftMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
                 params.rightMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
                 linearLayout.addView(editText, params);
-                new AlertDialog.Builder(context)
+                new AlertDialog.Builder(mContext)
                         .setTitle(R.string.create_todo_item)
                         .setView(linearLayout)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -192,21 +187,21 @@ public class TodoItemsActivity extends BaseActivity {
                                             setListShown(true);
                                             if (e.getCode() != MLException.OBJECT_NOT_FOUND) {
                                                 MLLog.e(TAG, e);
-                                                Utils.toast(context, e.getMessage());
+                                                Utils.toast(mContext, e.getMessage());
                                             }
                                             return;
                                         }
 
-                                        todoList.getTodoItems().add(todoItem);
+                                        mTodoList.getTodoItems().add(todoItem);
 
-                                        MLDataManager.saveInBackground(todoList, new SaveCallback() {
+                                        MLDataManager.saveInBackground(mTodoList, new SaveCallback() {
                                             @Override
                                             public void done(final MLException e) {
                                                 if (null != e) {
                                                     setListShown(true);
                                                     if (e.getCode() != MLException.OBJECT_NOT_FOUND) {
                                                         MLLog.e(TAG, e);
-                                                        Utils.toast(context, e.getMessage());
+                                                        Utils.toast(mContext, e.getMessage());
                                                     }
                                                     return;
                                                 }
@@ -223,6 +218,10 @@ public class TodoItemsActivity extends BaseActivity {
                         .create().show();
 
                 return true;
+            case R.id.action_refresh:
+                setListShown(false);
+                findResult();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -235,7 +234,7 @@ public class TodoItemsActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = LayoutInflater.from(context).inflate(R.layout.todo_row, null);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.todo_row, null);
             CheckedTextView textView = (CheckedTextView) view.findViewById(R.id.item);
             TodoItem todoItem = getItem(position);
             textView.setText(todoItem.getName());
@@ -245,12 +244,12 @@ public class TodoItemsActivity extends BaseActivity {
 
         @Override
         public TodoItem getItem(final int position) {
-            return todoItems.get(position);
+            return mTodoItems.get(position);
         }
 
         @Override
         public int getCount() {
-            return todoItems.size();
+            return mTodoItems.size();
         }
     }
 }

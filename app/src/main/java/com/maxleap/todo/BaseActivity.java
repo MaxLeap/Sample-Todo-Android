@@ -7,12 +7,12 @@ import android.view.MenuItem;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected Context context;
+    protected Context mContext;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
+        mContext = this;
     }
 
     @Override
