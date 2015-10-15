@@ -1,11 +1,26 @@
 <resources>
+    <string name="app_name">Todo</string>
+    <string name="title_list">Todo List</string>
+    <string name="title_item">Todo Item</string>
 
-    <string name="app_name">ToDoList</string>
-    <string name="empty">There are no todo items.</string>
+    <string name="empty_item">Todo item not exist.</string>
+    <string name="empty_list">Todo list not exist.</string>
     <string name="menu_insert">Add Todo</string>
     <string name="name">Enter your todo</string>
     <string name="confirm">Done</string>
     <string name="create_todo">Create Todo</string>
     <string name="menu_delete">Delete Todo</string>
 
+    <string name="err_require_username">Username is required.</string>
+    <string name="err_require_password">Password is required.</string>
+    <string name="err_connect_error">Connection failed.</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="create_todo_item">Create Todo Item</string>
+    <string name="delete_todolist">Delete a todo list?</string>
+    <string name="delete_todoitem">Delete a todo item?</string>
 </resources>

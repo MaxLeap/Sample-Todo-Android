@@ -1,4 +1,4 @@
-package as.leap.lastodolist;
+package com.maxleap.todo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

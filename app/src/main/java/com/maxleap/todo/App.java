@@ -1,8 +1,8 @@
-package as.leap.sample.todolist;
+package com.maxleap.todo;
 
 import android.app.Application;
-
-import as.leap.LeapCloud;
+import com.maxleap.MLObject;
+import com.maxleap.MaxLeap;
 
 public class App extends Application {
 
@@ -15,14 +15,16 @@ public class App extends Application {
 
         if (APP_ID.startsWith("Replace") || API_KEY.startsWith("Replace")) {
             throw new IllegalArgumentException("Please replace with your app id and api key first before" +
-                    "using LeapCloud SDK.");
+                    "using MaxLeap SDK.");
         }
-
-		/*
-         * Fill in this section with your LAS credentials
+        /*
+         * Fill in this section with your MaxLeap credentials
 		 */
-        LeapCloud.setLogLevel(LeapCloud.LOG_LEVEL_ERROR);
-        LeapCloud.initialize(getApplicationContext(), APP_ID, API_KEY);
+        MaxLeap.setLogLevel(MaxLeap.LOG_LEVEL_VERBOSE);
+        MaxLeap.initialize(this, APP_ID, API_KEY, MaxLeap.REGION_CN);
+
+        MLObject.registerSubclass(TodoList.class);
+        MLObject.registerSubclass(TodoItem.class);
     }
 
 }
