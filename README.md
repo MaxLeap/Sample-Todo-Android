@@ -1,8 +1,8 @@
-# LeapCloud-Sample-Todo-Android
+# MaxLeap-Sample-Todo-Android
 
 ## Overview
 
-Todo is a sample of LeapCloud SDK, and it relies on the basic module of LeapCloud. This app shows the basic CRUD operation based on LeapCloud SDK.
+Todo is a sample of MaxLeap SDK, and it relies on the basic module of MaxLeap. This app shows the basic CRUD operation based on MaxLeap SDK.
 
 ## Effect
 
