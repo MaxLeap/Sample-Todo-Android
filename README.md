@@ -1,14 +1,14 @@
 # MaxLeap-Sample-Todo-Android
 
-## Overview
+## 简介
 
-Todo is a sample of MaxLeap SDK, and it relies on the basic module of MaxLeap. This app shows the basic CRUD operation based on MaxLeap SDK.
+Todo 是 MaxLeap SDK 的一个 Sample，该项目依赖于 MaxLeap 的基础模块。通过该应用你可以学习和了解基于 MaxLeap SDK 的基本 CRUD 操作。
 
-## Effect
+## 效果
 
-![capture](capture/todo.gif)
+<img src="capture/todos.gif" alt="capture" style="width: 200px;"/>
 
-## How to Use
+## 使用
 
-1. Open Android Studio or IDEA, click `File -> Open `, select and import `setting.gradle`.
-2. Open `App.java` and replace the defined constants with your own `APP Id` and `API KEY`.
+1. 打开 Android Studio 或 IDEA ，点击菜单项 `File -> Open ` 选择 `setting.gradle` 文件导入工程.
+2. 打开 `App.java` 文件，使用你自己的 `APP Id` 和 `API KEY` 替换该文件中已定义的同名常量。

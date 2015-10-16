@@ -177,6 +177,7 @@ public class TodoItemsActivity extends BaseActivity {
                                 String name = editText.getText().toString();
                                 final TodoItem todoItem = new TodoItem();
                                 todoItem.setName(name);
+                                todoItem.setDone(false);
                                 setListShown(false);
 
 
