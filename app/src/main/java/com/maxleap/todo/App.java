@@ -1,6 +1,7 @@
 package com.maxleap.todo;
 
 import android.app.Application;
+
 import com.maxleap.MLObject;
 import com.maxleap.MaxLeap;
 
@@ -20,7 +21,7 @@ public class App extends Application {
         /*
          * Fill in this section with your MaxLeap credentials
 		 */
-        MaxLeap.setLogLevel(MaxLeap.LOG_LEVEL_VERBOSE);
+        MaxLeap.setLogLevel(MaxLeap.LOG_LEVEL_ERROR);
         MaxLeap.initialize(this, APP_ID, API_KEY, MaxLeap.REGION_CN);
 
         MLObject.registerSubclass(TodoList.class);

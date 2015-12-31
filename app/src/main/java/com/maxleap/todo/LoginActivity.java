@@ -8,7 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.maxleap.*;
+
+import com.maxleap.LogInCallback;
+import com.maxleap.MLLog;
+import com.maxleap.MLUser;
+import com.maxleap.MLUserManager;
+import com.maxleap.SignUpCallback;
 import com.maxleap.exception.MLException;
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,13 +43,16 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameTextInputLayout.setErrorEnabled(true);
         mPasswordTextInputLayout.setErrorEnabled(true);
 
+        mUsernameEditText.setText("foobar");
+        mPasswordEditText.setText("123456");
+
         findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if (validate()) {
                     MLUserManager.logInInBackground(mUsernameEditText.getText().toString(),
                             mPasswordEditText.getText().toString(),
-                            new LogInCallback<MLUser>() {
+                            new LogInCallback() {
                                 @Override
                                 public void done(final MLUser mlUser, final MLException e) {
                                     if (e != null) {
