@@ -22,10 +22,13 @@ public class App extends Application {
          * Fill in this section with your MaxLeap credentials
 		 */
         MaxLeap.setLogLevel(MaxLeap.LOG_LEVEL_ERROR);
-        MaxLeap.initialize(this, APP_ID, API_KEY, MaxLeap.REGION_CN);
 
         MLObject.registerSubclass(TodoList.class);
         MLObject.registerSubclass(TodoItem.class);
+
+        MaxLeap.initialize(this, APP_ID, API_KEY, MaxLeap.REGION_CN);
+
+
     }
 
 }
